@@ -7,8 +7,10 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +32,12 @@ public class ClienteController {
         var pacientes = pacienteService.findAll().stream().map(PacienteDto::fromEntity)
                 .toList();
         return ResponseEntity.ok(pacientes);
+    }
+    @PutMapping("/")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "findAll", summary = "Crea un nuevo paciente CU2", description = "Crea un nuevo paciente")
+    public ResponseEntity<Boolean> create(@Valid PacienteDto pacienteDto) {
+
+        return null;
     }
 }

@@ -3,11 +3,12 @@ package com.example.consultorio_medico_api.core.business.implementation;
 import com.example.consultorio_medico_api.core.business.input.PacienteService;
 import com.example.consultorio_medico_api.core.business.output.PacienteRepository;
 import com.example.consultorio_medico_api.core.entity.Paciente;
+import com.example.consultorio_medico_api.utils.error.ErrorBs;
+import com.example.consultorio_medico_api.utils.error.ErrorEnum;
 import io.vavr.control.Either;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
 
 import java.util.List;
 
@@ -24,11 +25,15 @@ public class PacienteBs implements PacienteService {
 
     @Override
     @Transactional
-    public Boolean save(Paciente paciente) {
+    public Either<ErrorBs, Boolean> save(Paciente paciente) {
         if (paciente == null) {
-           return Boolean.FALSE;
+            return Either.left(ErrorEnum.NULL_OBJECT);
+        }
+        var pacienteExistente = pacienteRepository.findByNumExpediente(paciente.getNumExpediente());
+        if (pacienteExistente != null) {
+            return Either.left(ErrorEnum.USER_DUPLICATED);
         }
         pacienteRepository.save(paciente);
-        return Boolean.TRUE;
+        return Either.right(Boolean.TRUE);
     }
 }

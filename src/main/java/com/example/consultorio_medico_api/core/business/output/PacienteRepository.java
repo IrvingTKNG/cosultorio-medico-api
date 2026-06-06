@@ -9,4 +9,5 @@ import java.util.List;
 public interface PacienteRepository {
     List<Paciente> findAll();
     void save(Paciente paciente);
+    Paciente findByNumExpediente(String numExpediente);
 }

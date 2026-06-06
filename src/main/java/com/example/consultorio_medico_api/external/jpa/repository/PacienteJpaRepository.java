@@ -8,4 +8,5 @@ import java.util.List;
 public interface PacienteJpaRepository extends JpaRepository<PacienteJpa, Integer> {
 
     List<PacienteJpa> findAll();
+    PacienteJpa findByNumExpediente(String numExpediente);
 }
