@@ -8,4 +8,5 @@ import java.util.List;
 @Repository
 public interface PacienteRepository {
     List<Paciente> findAll();
+    void save(Paciente paciente);
 }

@@ -22,4 +22,9 @@ public class ClienteDao implements PacienteRepository {
         List<PacienteJpa> pacientes = pacienteJpaRepository.findAll();
         return pacientes.stream().map(PacienteJpa::toEntity).toList();
     }
+
+    @Override
+    public void save(Paciente paciente) {
+        pacienteJpaRepository.save(PacienteJpa.fromEntity(paciente));
+    }
 }

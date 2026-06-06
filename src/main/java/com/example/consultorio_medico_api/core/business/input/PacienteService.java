@@ -10,7 +10,9 @@ import java.util.List;
 public interface PacienteService {
     /***
      * Trae todos los pacientes
-     * @return
+     * @return  List<Paciente>
      */
     List<Paciente> findAll();
+
+    Boolean save(Paciente paciente);
 }
