@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Getter
 @Setter
@@ -19,6 +20,6 @@ public class Paciente {
     private String correo;
     private String numExpediente;
     private LocalDate fhNacimiento;
-    private LocalDate fhRegistro;
+    private OffsetDateTime fhRegistro;
 
 }

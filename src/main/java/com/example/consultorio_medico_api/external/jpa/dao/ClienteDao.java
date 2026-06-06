@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -27,7 +28,8 @@ public class ClienteDao implements PacienteRepository {
     }
 
     @Override
-    public Paciente findByNumExpediente(String numExpediente) {
-        return pacienteJpaRepository.findByNumExpediente(numExpediente).toEntity();
+    public Optional<Paciente> findByNumExpediente(String numExpediente) {
+        var result = pacienteJpaRepository.findByNumExpediente(numExpediente);
+        return result.map(PacienteJpa::toEntity);
     }
 }

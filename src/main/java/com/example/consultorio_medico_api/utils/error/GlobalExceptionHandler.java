@@ -7,13 +7,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    // Captura los errores de @Valid en los DTOs
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -26,10 +24,10 @@ public class GlobalExceptionHandler {
 
         ErrorResponseDto errorResponse = new ErrorResponseDto(
                 HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "VALIDATION_ERROR", //  identificador global a las fallas de DTOs
                 "Error de validación en los campos enviados.",
-                errors,
-                LocalDateTime.now()
+                errors
         );
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);

@@ -2,17 +2,16 @@ package com.example.consultorio_medico_api.external.rest.controller;
 
 import com.example.consultorio_medico_api.core.business.input.PacienteService;
 import com.example.consultorio_medico_api.external.rest.dto.PacienteDto;
+import com.example.consultorio_medico_api.utils.error.ErrorMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,11 +32,14 @@ public class ClienteController {
                 .toList();
         return ResponseEntity.ok(pacientes);
     }
-    @PutMapping("/")
-    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
-    @Operation(operationId = "findAll", summary = "Crea un nuevo paciente CU2", description = "Crea un nuevo paciente")
-    public ResponseEntity<Boolean> create(@Valid PacienteDto pacienteDto) {
 
-        return null;
+    @PostMapping("/")
+    @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "createPaciente", summary = "Crea un nuevo paciente CU2", description = "Crea un nuevo paciente")
+    public ResponseEntity<?> create(@Valid @RequestBody PacienteDto pacienteDto) {
+        var result = pacienteService.save(pacienteDto.toEntity());
+        return result
+                .<ResponseEntity<?>>map(success -> ResponseEntity.status(HttpStatus.CREATED).body(success))
+                .getOrElseGet(ErrorMapper::mapToResponseEntity);
     }
 }

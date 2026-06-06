@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 
 @Builder
@@ -30,7 +31,7 @@ public class PacienteJpa {
     private String apellidoMaterno;
     @Column(name = "tx_num_telefono")
     private String numTelefono;
-    @Column(name = "tx_num_telefono_alter")
+    @Column(name = "tx_num_tel_alter")
     private String numTelefonoAlterno;
     @Column(name = "tx_correo")
     private String correo;
@@ -39,7 +40,7 @@ public class PacienteJpa {
     @Column(name = "fh_nacimiento")
     private LocalDate fechaNacimiento;
     @Column(name = "fh_registro")
-    private LocalDate fechaRegistro;
+    private OffsetDateTime fechaRegistro;
 
     public static PacienteJpa fromEntity(Paciente entity) {
         return PacienteJpa.builder()
