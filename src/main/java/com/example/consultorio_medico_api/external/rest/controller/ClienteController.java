@@ -36,10 +36,20 @@ public class ClienteController {
     @PostMapping("/")
     @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "createPaciente", summary = "Crea un nuevo paciente CU2", description = "Crea un nuevo paciente")
-    public ResponseEntity<?> create(@Valid @RequestBody PacienteDto pacienteDto) {
+    public ResponseEntity<Boolean> create(@Valid @RequestBody PacienteDto pacienteDto) {
         var result = pacienteService.save(pacienteDto.toEntity());
         return result
-                .<ResponseEntity<?>>map(success -> ResponseEntity.status(HttpStatus.CREATED).body(success))
+                .<ResponseEntity<Boolean>>map(success -> ResponseEntity.status(HttpStatus.CREATED).body(success))
+                .getOrElseGet(ErrorMapper::mapToResponseEntity);
+    }
+
+    @DeleteMapping("/")
+    @ApiResponse(responseCode = "2012", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "deletePaciente", summary = "Elimina un paciente CU3", description = "Elimina un paciente")
+    public ResponseEntity<Boolean> delete(@RequestParam("id") Integer id) {
+        var result = pacienteService.delete(id);
+        return result
+                .<ResponseEntity<Boolean>>map(success -> ResponseEntity.status(HttpStatus.OK).body(success))
                 .getOrElseGet(ErrorMapper::mapToResponseEntity);
     }
 }

@@ -17,9 +17,15 @@ public class ClienteDao implements PacienteRepository {
     private final PacienteJpaRepository pacienteJpaRepository;
 
     @Override
+    public Optional<Paciente> findById(Integer id) {
+        var pacienteJpa = pacienteJpaRepository.findById(id);
+        return pacienteJpa.map(PacienteJpa::toEntity);
+    }
+
+    @Override
     public List<Paciente> findAll() {
-        List<PacienteJpa> pacientes = pacienteJpaRepository.findAll();
-        return pacientes.stream().map(PacienteJpa::toEntity).toList();
+        List<PacienteJpa> pacientesJpa = pacienteJpaRepository.findAll();
+        return pacientesJpa.stream().map(PacienteJpa::toEntity).toList();
     }
 
     @Override
@@ -29,7 +35,12 @@ public class ClienteDao implements PacienteRepository {
 
     @Override
     public Optional<Paciente> findByNumExpediente(String numExpediente) {
-        var result = pacienteJpaRepository.findByNumExpediente(numExpediente);
-        return result.map(PacienteJpa::toEntity);
+        var pacienteJpa = pacienteJpaRepository.findByNumExpediente(numExpediente);
+        return pacienteJpa.map(PacienteJpa::toEntity);
+    }
+
+    @Override
+    public Boolean deleteById(Integer id) {
+        return pacienteJpaRepository.deletePacienteJpaById(id);
     }
 }

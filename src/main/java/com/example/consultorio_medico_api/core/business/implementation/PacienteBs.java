@@ -30,7 +30,7 @@ public class PacienteBs implements PacienteService {
     @Transactional
     public Either<ErrorBs, Boolean> save(Paciente paciente) {
         if (paciente == null) {
-            return Either.left(ErrorEnum.NULL_OBJECT);
+            return Either.left(ErrorEnum.NOT_FOUND);
         }
         var pacienteExistente = pacienteRepository.findByNumExpediente(paciente.getNumExpediente());
         if (pacienteExistente.isPresent()) {
@@ -38,6 +38,16 @@ public class PacienteBs implements PacienteService {
         }
         paciente.setFhRegistro(OffsetDateTime.now(DEFAULT_ZONE_ID));
         pacienteRepository.save(paciente);
+        return Either.right(Boolean.TRUE);
+    }
+
+    @Override
+    public Either<ErrorBs, Boolean> delete(Integer id) {
+        var pacienteOptional = pacienteRepository.findById(id);
+        if (pacienteOptional.isEmpty()){
+            return Either.left(ErrorEnum.NOT_FOUND);
+        }
+        pacienteRepository.deleteById(id);
         return Either.right(Boolean.TRUE);
     }
 }

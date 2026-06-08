@@ -1,10 +1,13 @@
 package com.example.consultorio_medico_api.utils.error;
 
+import lombok.experimental.UtilityClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@UtilityClass
 public class ErrorMapper {
-    public static ResponseEntity<ErrorResponseDto> mapToResponseEntity(ErrorBs error) {
+    @SuppressWarnings("unchecked")
+    public static <T> ResponseEntity<T> mapToResponseEntity(ErrorBs error) {
         HttpStatus status = HttpStatus.BAD_REQUEST; // Fallback por defecto
 
         // Si es una instancia del enum, se asigna el HttpStatus correspondiente
@@ -19,6 +22,6 @@ public class ErrorMapper {
                 error.getMessage() // O error.getCode() si quieres mandarlo en otra propiedad
         );
 
-        return ResponseEntity.status(status).body(errorDto);
+        return (ResponseEntity<T>) ResponseEntity.status(status).body(errorDto);
     }
 }
