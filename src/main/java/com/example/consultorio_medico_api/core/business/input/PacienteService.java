@@ -11,7 +11,15 @@ public interface PacienteService {
      * Trae todos los pacientes
      * @return  List<Paciente>
      */
-    List<Paciente> findAll();
+    List<Paciente> listAll();
+
+    /***
+     * Trae un paciente por su id
+     * @param id
+     * @return
+     */
+
+    Either<ErrorBs,Paciente> getById(Integer id);
 
     /***
      * Guarda un paciente
@@ -20,6 +28,12 @@ public interface PacienteService {
      */
     Either<ErrorBs,Boolean> save(Paciente paciente);
 
+    /***
+     * Actualiza un paciente
+     * @param paciente
+     * @return
+     */
+    Either<ErrorBs,Boolean> update(Integer idPaciente, Paciente paciente);
     /***
      * Borra un paciente por su id
      * @param id

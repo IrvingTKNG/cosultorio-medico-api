@@ -28,28 +28,41 @@ public class ClienteController {
     @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PacienteDto.class))))
     @Operation(operationId = "findAll", summary = "Obtiene todos los pacientes CU1", description = "Obtiene todos los pacientes registrados en el sistema")
     public ResponseEntity<List<PacienteDto>> findAll() {
-        var pacientes = pacienteService.findAll().stream().map(PacienteDto::fromEntity)
+        var pacientes = pacienteService.listAll().stream().map(PacienteDto::fromEntity)
                 .toList();
         return ResponseEntity.ok(pacientes);
     }
 
-    @PostMapping("/")
-    @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
-    @Operation(operationId = "createPaciente", summary = "Crea un nuevo paciente CU2", description = "Crea un nuevo paciente")
-    public ResponseEntity<Boolean> create(@Valid @RequestBody PacienteDto pacienteDto) {
-        var result = pacienteService.save(pacienteDto.toEntity());
-        return result
-                .<ResponseEntity<Boolean>>map(success -> ResponseEntity.status(HttpStatus.CREATED).body(success))
-                .getOrElseGet(ErrorMapper::mapToResponseEntity);
+    @GetMapping("/{idPaciente}")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PacienteDto.class)))
+    @Operation(operationId = "getPaciente", summary = "Obtiene a un paciente mediante su id CU2", description = "Obtiene a un paciente mediante su id registrados en el sistema")
+    public ResponseEntity<PacienteDto> getPaciente(@PathVariable Integer idPaciente) {
+        var paciente = pacienteService.getById(idPaciente).map(PacienteDto::fromEntity);
+        return paciente.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
     }
 
-    @DeleteMapping("/")
-    @ApiResponse(responseCode = "2012", content = @Content(schema = @Schema(implementation = Boolean.class)))
-    @Operation(operationId = "deletePaciente", summary = "Elimina un paciente CU3", description = "Elimina un paciente")
-    public ResponseEntity<Boolean> delete(@RequestParam("id") Integer id) {
-        var result = pacienteService.delete(id);
-        return result
-                .<ResponseEntity<Boolean>>map(success -> ResponseEntity.status(HttpStatus.OK).body(success))
-                .getOrElseGet(ErrorMapper::mapToResponseEntity);
+    @PostMapping("/")
+    @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "createPaciente", summary = "Crea un nuevo paciente CU3", description = "Crea un nuevo paciente")
+    public ResponseEntity<Boolean> create(@Valid @RequestBody PacienteDto pacienteDto) {
+        var result = pacienteService.save(pacienteDto.toEntity());
+        return result.fold(ErrorMapper::mapToResponseEntity,
+                success -> ResponseEntity.status(HttpStatus.CREATED).body(success));
+    }
+
+    @PostMapping("/{idPaciente}")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "updatePaciente", summary = "Actualiza un paciente CU4", description = "Actualiza un paciente")
+    public ResponseEntity<Boolean> updatePaciente(@PathVariable Integer idPaciente, @Valid @RequestBody PacienteDto pacienteDto) {
+        var result = pacienteService.update(idPaciente, pacienteDto.toEntity());
+        return result.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
+    }
+
+    @DeleteMapping("/{idPaciente}")
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
+    @Operation(operationId = "deletePaciente", summary = "Elimina un paciente CU5", description = "Elimina un paciente")
+    public ResponseEntity<Boolean> delete(@PathVariable Integer idPaciente) {
+        var result = pacienteService.delete(idPaciente);
+        return result.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
     }
 }

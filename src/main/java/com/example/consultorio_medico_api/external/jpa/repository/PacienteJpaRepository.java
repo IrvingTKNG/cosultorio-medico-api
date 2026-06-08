@@ -13,10 +13,5 @@ public interface PacienteJpaRepository extends JpaRepository<PacienteJpa, Intege
      */
     Optional<PacienteJpa> findByNumExpediente(String numExpediente);
 
-    /***
-     * Borra un paciente por su id
-     * @param id
-     * @return
-     */
-    Boolean deletePacienteJpaById(Integer id);
+
 }

@@ -40,7 +40,7 @@ public class ClienteDao implements PacienteRepository {
     }
 
     @Override
-    public Boolean deleteById(Integer id) {
-        return pacienteJpaRepository.deletePacienteJpaById(id);
+    public void deleteById(Integer id) {
+        pacienteJpaRepository.deleteById(id);
     }
 }

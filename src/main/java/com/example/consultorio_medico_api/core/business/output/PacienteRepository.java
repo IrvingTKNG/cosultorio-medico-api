@@ -12,5 +12,5 @@ public interface PacienteRepository {
     List<Paciente> findAll();
     void save(Paciente paciente);
     Optional<Paciente> findByNumExpediente(String numExpediente);
-    Boolean deleteById(Integer id);
+    void  deleteById(Integer id);
 }

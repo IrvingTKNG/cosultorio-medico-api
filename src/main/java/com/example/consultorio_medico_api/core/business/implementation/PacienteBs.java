@@ -22,9 +22,17 @@ public class PacienteBs implements PacienteService {
     private final PacienteRepository pacienteRepository;
 
     @Override
-    public List<Paciente> findAll() {
+    public List<Paciente> listAll() {
         return pacienteRepository.findAll();
     }
+
+    @Override
+    public Either<ErrorBs, Paciente> getById(Integer id) {
+        var optionalPaciente = pacienteRepository.findById(id);
+
+        return optionalPaciente.<Either<ErrorBs, Paciente>>map(Either::right).orElseGet(() -> Either.left(ErrorEnum.NOT_FOUND));
+    }
+
 
     @Override
     @Transactional
@@ -42,9 +50,29 @@ public class PacienteBs implements PacienteService {
     }
 
     @Override
+    public Either<ErrorBs, Boolean> update(Integer idPaciente, Paciente paciente) {
+        var optionalPaciente = pacienteRepository.findById(idPaciente);
+        if (optionalPaciente.isEmpty()) {
+            return Either.left(ErrorEnum.NOT_FOUND);
+        }
+        var getPaciente = optionalPaciente.get();
+        getPaciente.setNombre(paciente.getNombre());
+        getPaciente.setApellidoPaterno(paciente.getApellidoPaterno());
+        getPaciente.setApellidoMaterno(paciente.getApellidoMaterno());
+        getPaciente.setNumTelefono(paciente.getNumTelefono());
+        getPaciente.setNumTelefonoAlterno(paciente.getNumTelefonoAlterno());
+        getPaciente.setCorreo(paciente.getCorreo());
+        getPaciente.setNumExpediente(paciente.getNumExpediente());
+        getPaciente.setFhNacimiento(paciente.getFhNacimiento());
+        pacienteRepository.save(getPaciente);
+        return Either.right(Boolean.TRUE);
+    }
+
+    @Override
+    @Transactional
     public Either<ErrorBs, Boolean> delete(Integer id) {
         var pacienteOptional = pacienteRepository.findById(id);
-        if (pacienteOptional.isEmpty()){
+        if (pacienteOptional.isEmpty()) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
         pacienteRepository.deleteById(id);
