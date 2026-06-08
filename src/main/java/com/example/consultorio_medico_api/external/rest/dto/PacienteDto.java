@@ -9,16 +9,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.print.DocFlavor;
 import java.time.LocalDate;
 
 @Builder
 @Getter
 @AllArgsConstructor
-@Schema(name = "Paciente" , description = "Contiene información del paciente")
+@Schema(name = "Paciente", description = "Contiene información del paciente")
 public class PacienteDto {
     @JsonProperty
-    @Schema(description = "Identificador del paciente")
+    @Schema(description = "Identificador del paciente", accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
     @JsonProperty
     @Schema(description = "Nombre del paciente")
@@ -36,7 +35,7 @@ public class PacienteDto {
     @Schema(description = "Numero de teléfono alternativo del paciente")
     private String numTelefonoAlterno;
     @JsonProperty
-    @Schema(description = "Correo electronico del paciente")
+    @Schema(description = "Correo electrónico del paciente")
     private String correo;
     @JsonProperty
     @Schema(description = "Numero de expediente del paciente")
@@ -47,7 +46,7 @@ public class PacienteDto {
     private LocalDate fechaNacimiento;
     @JsonProperty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
-    @Schema(description = "Fecha de registro del paciente", format = "string", implementation = String.class)
+    @Schema(description = "Fecha de registro del paciente", format = "string", implementation = String.class, accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDate fechaRegistro;
 
     public static PacienteDto fromEntity(Paciente entity) {
@@ -61,7 +60,7 @@ public class PacienteDto {
                 .correo(entity.getCorreo())
                 .numExpediente(entity.getNumExpediente())
                 .fechaNacimiento(entity.getFhNacimiento())
-                .fechaRegistro(entity.getFhRegistro())
+                .fechaRegistro(entity.getFhRegistro().toLocalDate())
                 .build();
     }
 
@@ -75,7 +74,6 @@ public class PacienteDto {
                 .correo(correo)
                 .numExpediente(numExpediente)
                 .fhNacimiento(fechaNacimiento)
-                .fhRegistro(fechaRegistro)
                 .build();
     }
 }
