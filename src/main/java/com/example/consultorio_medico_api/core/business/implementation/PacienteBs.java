@@ -29,7 +29,6 @@ public class PacienteBs implements PacienteService {
     @Override
     public Either<ErrorBs, Paciente> getById(Integer id) {
         var optionalPaciente = pacienteRepository.findById(id);
-
         return optionalPaciente.<Either<ErrorBs, Paciente>>map(Either::right).orElseGet(() -> Either.left(ErrorEnum.NOT_FOUND));
     }
 
@@ -50,6 +49,7 @@ public class PacienteBs implements PacienteService {
     }
 
     @Override
+    @Transactional
     public Either<ErrorBs, Boolean> update(Integer idPaciente, Paciente paciente) {
         var optionalPaciente = pacienteRepository.findById(idPaciente);
         if (optionalPaciente.isEmpty()) {
@@ -71,8 +71,8 @@ public class PacienteBs implements PacienteService {
     @Override
     @Transactional
     public Either<ErrorBs, Boolean> delete(Integer id) {
-        var pacienteOptional = pacienteRepository.findById(id);
-        if (pacienteOptional.isEmpty()) {
+        var pacienteExists = pacienteRepository.existsById(id);
+        if (pacienteExists.equals(false)) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
         pacienteRepository.deleteById(id);

@@ -19,7 +19,7 @@ public class ErrorMapper {
                 status.value(),
                 status.getReasonPhrase(),
                 error.getCode(),
-                error.getMessage() // O error.getCode() si quieres mandarlo en otra propiedad
+                error.getMessage()
         );
 
         return (ResponseEntity<T>) ResponseEntity.status(status).body(errorDto);
