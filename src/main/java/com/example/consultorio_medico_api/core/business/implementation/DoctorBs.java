@@ -30,7 +30,7 @@ public class DoctorBs implements DoctorService {
 
     @Override
     @Transactional
-    public Either<ErrorBs, Boolean> save(Doctor doctor) {
+    public Either<ErrorBs, Boolean> create(Doctor doctor) {
         var doctorExistente = doctorRepository.findByCedula(doctor.getCedula());
         if (doctorExistente.isPresent()) {
             return Either.left(ErrorEnum.USER_DUPLICATED);

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/doctores")
+@Tag(name = "Doctores", description = "Endpoints relacionados con los doctores")
 public class DoctorController {
     private final DoctorService doctorService;
 
@@ -42,7 +44,7 @@ public class DoctorController {
     @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "createDoctor", summary = "Crea un doctor.CU-DOC-03", description = "Crea un doctor")
     public ResponseEntity<Boolean> createDoctor(@Valid @RequestBody DoctorDto doctorDto) {
-        var respuesta = doctorService.save(doctorDto.toEntity());
+        var respuesta = doctorService.create(doctorDto.toEntity());
         return respuesta.fold(
                 ErrorMapper::mapToResponseEntity,
                 success -> ResponseEntity.status(HttpStatus.CREATED).body(success)
