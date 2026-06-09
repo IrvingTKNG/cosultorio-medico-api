@@ -71,8 +71,8 @@ public class PacienteBs implements PacienteService {
     @Override
     @Transactional
     public Either<ErrorBs, Boolean> delete(Integer id) {
-        var pacienteOptional = pacienteRepository.findById(id);
-        if (pacienteOptional.isEmpty()) {
+        var pacienteExists = pacienteRepository.existsById(id);
+        if (pacienteExists.equals(false)) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
         pacienteRepository.deleteById(id);

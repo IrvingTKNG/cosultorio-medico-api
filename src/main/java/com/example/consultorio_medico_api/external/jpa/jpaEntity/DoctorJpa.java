@@ -1,27 +1,23 @@
 package com.example.consultorio_medico_api.external.jpa.jpaEntity;
 
-import com.example.consultorio_medico_api.core.entity.Paciente;
+import com.example.consultorio_medico_api.core.entity.Doctor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import java.sql.Time;
+import java.time.LocalTime;
 
-
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Entity
-@Table(name = "paciente")
-public class PacienteJpa {
+@Table(name = "doctor")
+public class DoctorJpa {
     @Id
-    @SequenceGenerator(name = "paciente_id_seq", sequenceName = "paciente_id_seq", allocationSize = 1)
-    @GeneratedValue(generator = "paciente_id_seq", strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_paciente")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_doctor")
     private Integer id;
     @Column(name = "tx_nombre")
     private String nombre;
@@ -35,15 +31,17 @@ public class PacienteJpa {
     private String numTelefonoAlterno;
     @Column(name = "tx_correo")
     private String correo;
-    @Column(name = "tx_num_expediente")
-    private String numExpediente;
-    @Column(name = "fh_nacimiento")
-    private LocalDate fechaNacimiento;
-    @Column(name = "fh_registro")
-    private OffsetDateTime fechaRegistro;
+    @Column(name = "tx_cedula")
+    private String cedula;
+    @Column(name = "tx_especialidad")
+    private String especialidad;
+    @Column(name = "tm_entrada")
+    private LocalTime entrada;
+    @Column(name = "tm_salida")
+    private LocalTime salida;
 
-    public static PacienteJpa fromEntity(Paciente entity) {
-        return PacienteJpa.builder()
+    public static DoctorJpa fromEntity(Doctor entity) {
+        return DoctorJpa.builder()
                 .id(entity.getId())
                 .nombre(entity.getNombre())
                 .apellidoPaterno(entity.getApellidoPaterno())
@@ -51,14 +49,15 @@ public class PacienteJpa {
                 .numTelefono(entity.getNumTelefono())
                 .numTelefonoAlterno(entity.getNumTelefonoAlterno())
                 .correo(entity.getCorreo())
-                .numExpediente(entity.getNumExpediente())
-                .fechaNacimiento(entity.getFhNacimiento())
-                .fechaRegistro(entity.getFhRegistro())
+                .cedula(entity.getCedula())
+                .especialidad(entity.getEspecialidad())
+                .entrada(entity.getEntrada())
+                .salida(entity.getSalida())
                 .build();
     }
 
-    public Paciente toEntity() {
-        return Paciente.builder()
+    public Doctor toEntity() {
+        return Doctor.builder()
                 .id(id)
                 .nombre(nombre)
                 .apellidoPaterno(apellidoPaterno)
@@ -66,9 +65,10 @@ public class PacienteJpa {
                 .numTelefono(numTelefono)
                 .numTelefonoAlterno(numTelefonoAlterno)
                 .correo(correo)
-                .numExpediente(numExpediente)
-                .fhNacimiento(fechaNacimiento)
-                .fhRegistro(fechaRegistro)
+                .cedula(cedula)
+                .especialidad(especialidad)
+                .entrada(entrada)
+                .salida(salida)
                 .build();
     }
 }

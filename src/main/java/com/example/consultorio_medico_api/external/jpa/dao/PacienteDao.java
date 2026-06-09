@@ -12,9 +12,14 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class ClienteDao implements PacienteRepository {
+public class PacienteDao implements PacienteRepository {
 
     private final PacienteJpaRepository pacienteJpaRepository;
+
+    @Override
+    public Boolean existsById(Integer id) {
+        return pacienteJpaRepository.existsById(id);
+    }
 
     @Override
     public Optional<Paciente> findById(Integer id) {

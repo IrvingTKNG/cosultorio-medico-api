@@ -5,6 +5,8 @@ import com.example.consultorio_medico_api.utils.StringsConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,29 +22,34 @@ public class PacienteDto {
     @Schema(description = "Identificador del paciente", accessMode = Schema.AccessMode.READ_ONLY)
     private Integer id;
     @JsonProperty
-    @Schema(description = "Nombre del paciente")
+    @Schema(description = "Nombre del paciente",requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String nombre;
     @JsonProperty
-    @Schema(description = "Apellido paterno del paciente")
+    @Schema(description = "Apellido paterno del paciente",requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String apellidoPaterno;
     @JsonProperty
     @Schema(description = "Apellido materno del paciente")
     private String apellidoMaterno;
     @JsonProperty
-    @Schema(description = "Numero de teléfono del paciente")
+    @Schema(description = "Numero de teléfono del paciente",requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String numTelefono;
     @JsonProperty
     @Schema(description = "Numero de teléfono alternativo del paciente")
     private String numTelefonoAlterno;
     @JsonProperty
-    @Schema(description = "Correo electrónico del paciente")
+    @Schema(description = "Correo electrónico del paciente",requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank
     private String correo;
     @JsonProperty
     @Schema(description = "Numero de expediente del paciente")
     private String numExpediente;
     @JsonProperty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
-    @Schema(description = "Fecha de nacimiento del paciente", format = "string", implementation = String.class)
+    @Schema(description = "Fecha de nacimiento del paciente", format = "string", implementation = String.class, example = "01/01/2010",requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull
     private LocalDate fechaNacimiento;
     @JsonProperty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
