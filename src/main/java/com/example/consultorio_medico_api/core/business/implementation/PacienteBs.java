@@ -35,7 +35,7 @@ public class PacienteBs implements PacienteService {
 
     @Override
     @Transactional
-    public Either<ErrorBs, Boolean> save(Paciente paciente) {
+    public Either<ErrorBs, Boolean> create(Paciente paciente) {
         if (paciente == null) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }

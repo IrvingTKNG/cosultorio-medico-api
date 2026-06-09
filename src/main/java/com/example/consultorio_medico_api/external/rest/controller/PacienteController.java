@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/pacientes")
+@Tag(name = "Pacientes", description = "Endpoints relacionados con los pacientes")
 public class PacienteController {
     private final PacienteService pacienteService;
 
     @GetMapping("/")
     @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PacienteDto.class))))
-    @Operation(operationId = "findAll", summary = "Obtiene todos los pacientes. CU-PAC-01", description = "Obtiene todos los pacientes registrados en el sistema")
+    @Operation(operationId = "findAllPacientes", summary = "Obtiene todos los pacientes. CU-PAC-01", description = "Obtiene todos los pacientes registrados en el sistema")
     public ResponseEntity<List<PacienteDto>> findAllPacientes() {
         var pacientes = pacienteService.listAll().stream().map(PacienteDto::fromEntity)
                 .toList();
@@ -43,7 +45,7 @@ public class PacienteController {
     @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "createPaciente", summary = "Crea un nuevo paciente. CU-PAC-03", description = "Crea un nuevo paciente")
     public ResponseEntity<Boolean> create(@Valid @RequestBody PacienteDto pacienteDto) {
-        var result = pacienteService.save(pacienteDto.toEntity());
+        var result = pacienteService.create(pacienteDto.toEntity());
         return result.fold(ErrorMapper::mapToResponseEntity,
                 success -> ResponseEntity.status(HttpStatus.CREATED).body(success));
     }

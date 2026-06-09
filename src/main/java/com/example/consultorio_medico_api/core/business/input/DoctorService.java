@@ -25,7 +25,7 @@ public interface DoctorService {
      * @param doctor
      * @return
      */
-    Either<ErrorBs, Boolean> save(Doctor doctor);
+    Either<ErrorBs, Boolean> create(Doctor doctor);
 
     /***
      * Borra un doctor por su id

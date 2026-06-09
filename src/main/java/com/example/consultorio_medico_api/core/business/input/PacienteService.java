@@ -26,7 +26,7 @@ public interface PacienteService {
      * @param paciente
      * @return
      */
-    Either<ErrorBs,Boolean> save(Paciente paciente);
+    Either<ErrorBs,Boolean> create(Paciente paciente);
 
     /***
      * Actualiza un paciente
