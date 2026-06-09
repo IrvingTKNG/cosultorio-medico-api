@@ -9,6 +9,13 @@ import java.util.Optional;
 @Repository
 public interface DoctorRepository {
     /***
+     * Verifica si existe un doctor por su id
+     * @param id
+     * @return
+     */
+    Boolean existsById(Integer id);
+
+    /***
      * Trae un doctor por su id
      * @param id
      * @return

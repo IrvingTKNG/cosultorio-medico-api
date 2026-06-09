@@ -16,6 +16,11 @@ public class DoctorDao implements DoctorRepository {
     private final DoctorJpaRepository doctorJpaRepository;
 
     @Override
+    public Boolean existsById(Integer id) {
+        return doctorJpaRepository.existsById(id);
+    }
+
+    @Override
     public Optional<Doctor> findById(Integer id) {
         var doctor = doctorJpaRepository.findById(id);
         return doctor.map(DoctorJpa::toEntity);

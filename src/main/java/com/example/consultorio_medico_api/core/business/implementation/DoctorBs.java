@@ -42,9 +42,8 @@ public class DoctorBs implements DoctorService {
     @Override
     @Transactional
     public Either<ErrorBs, Boolean> delete(Integer id) {
-        //TODO: cambiar a exists
-        var doctorOptional = doctorRepository.findById(id);
-        if (doctorOptional.isEmpty()) {
+        var doctorExists = doctorRepository.existsById(id);
+        if (doctorExists.equals(false)) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
         doctorRepository.deleteById(id);
@@ -55,7 +54,7 @@ public class DoctorBs implements DoctorService {
     @Transactional
     public Either<ErrorBs, Boolean> update(Integer id, Doctor doctor) {
         var optionalDoctor = doctorRepository.findById(id);
-        if (optionalDoctor.isEmpty()){
+        if (optionalDoctor.isEmpty()) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
         var getDoctor = optionalDoctor.get();

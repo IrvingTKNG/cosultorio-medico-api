@@ -42,8 +42,4 @@ public class GlobalExceptionHandler {
         return buildBadRequest("JSON_PARSE_ERROR", "Error al leer los datos del JSON enviado.", Map.of("error_tecnico", detalle));
     }
 
-    @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ErrorResponseDto> handleBusinessException(BusinessException ex) {
-        return buildBadRequest(ex.getCode(), ex.getMessage(), null);
-    }
 }
