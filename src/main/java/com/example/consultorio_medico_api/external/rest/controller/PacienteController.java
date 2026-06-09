@@ -16,18 +16,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/pacientes")
-public class ClienteController {
+@RequestMapping("/pacientes")
+public class PacienteController {
     private final PacienteService pacienteService;
 
-    public ClienteController(PacienteService pacienteService) {
+    public PacienteController(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
 
     @GetMapping("/")
     @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PacienteDto.class))))
     @Operation(operationId = "findAll", summary = "Obtiene todos los pacientes CU1", description = "Obtiene todos los pacientes registrados en el sistema")
-    public ResponseEntity<List<PacienteDto>> findAll() {
+    public ResponseEntity<List<PacienteDto>> findAllPacientes() {
         var pacientes = pacienteService.listAll().stream().map(PacienteDto::fromEntity)
                 .toList();
         return ResponseEntity.ok(pacientes);
@@ -61,7 +61,7 @@ public class ClienteController {
     @DeleteMapping("/{idPaciente}")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "deletePaciente", summary = "Elimina un paciente CU5", description = "Elimina un paciente")
-    public ResponseEntity<Boolean> delete(@PathVariable Integer idPaciente) {
+    public ResponseEntity<Boolean> deletePaciente(@PathVariable Integer idPaciente) {
         var result = pacienteService.delete(idPaciente);
         return result.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
     }
