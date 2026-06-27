@@ -33,10 +33,10 @@ public class CitaDto {
     @Schema(description = "Identificador del doctor", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer idDoctor;
     @JsonProperty
-    @Schema(description = "Identificador del estado de la cita")
+    @Schema(description = "Identificador del estado de la cita",accessMode = Schema.AccessMode.READ_ONLY)
     private Integer idEstado;
     @JsonProperty
-    @Schema(description = "Estado de la cita")
+    @Schema(description = "Estado de la cita",accessMode = Schema.AccessMode.READ_ONLY)
     private String estado;
     @JsonProperty
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
@@ -69,11 +69,8 @@ public class CitaDto {
 
     public Cita toEntity() {
         return Cita.builder()
-                .id(id)
                 .idPaciente(idPaciente)
                 .idDoctor(idDoctor)
-                .idEstado(idEstado)
-                .estado(estado)
                 .fecha(fechaCita)
                 .horaInicio(inicio)
                 .horaFin(fin)

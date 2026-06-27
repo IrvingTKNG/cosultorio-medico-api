@@ -2,6 +2,7 @@ package com.example.consultorio_medico_api.core.business.implementation;
 
 import com.example.consultorio_medico_api.core.business.input.CitaService;
 import com.example.consultorio_medico_api.core.business.output.CitaRepository;
+import com.example.consultorio_medico_api.core.business.statenmachine.CitaSM;
 import com.example.consultorio_medico_api.core.entity.Cita;
 import com.example.consultorio_medico_api.utils.error.ErrorBs;
 import com.example.consultorio_medico_api.utils.error.ErrorEnum;
@@ -12,10 +13,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_AGENDADA;
+import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_REAGENDADA;
+
 @Service
 @RequiredArgsConstructor
 public class CitaBs implements CitaService {
     private final CitaRepository citaRepository;
+    private final CitaSM citaSM;
+
+    //TODO:
+    // Agregar filtro por fecha
+    // Agregar filtro por doctor
+    // Agregar Reglas de negocio
+    // Paginacion y ordenamiento
+    // Agrear maquina de estados de cita
 
     @Override
     public List<Cita> listAll() {
@@ -37,6 +49,7 @@ public class CitaBs implements CitaService {
     public Either<ErrorBs, Boolean> create(Cita cita) {
         //TODO: no puede haber dos citas con la misma fecha y hora para el mismo paciente y doctor
         //Mejora: Agregar indicaciones para la cita
+        cita.setIdEstado(ST_AGENDADA);
         citaRepository.save(cita);
         return Either.right(Boolean.TRUE);
     }
@@ -62,7 +75,9 @@ public class CitaBs implements CitaService {
         var getCita = findCita.get();
         getCita.setFecha(cita.getFecha());
         getCita.setHoraInicio(cita.getHoraInicio());
+        getCita.setIdDoctor(cita.getIdDoctor());
         getCita.setHoraFin(cita.getHoraFin());
+        getCita.setIdEstado(ST_REAGENDADA);
         citaRepository.save(getCita);
         return Either.right(Boolean.TRUE);
     }
