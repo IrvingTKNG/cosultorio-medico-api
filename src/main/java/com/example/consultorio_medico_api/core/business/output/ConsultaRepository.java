@@ -1,7 +1,6 @@
 package com.example.consultorio_medico_api.core.business.output;
 
 import com.example.consultorio_medico_api.core.entity.Consulta;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

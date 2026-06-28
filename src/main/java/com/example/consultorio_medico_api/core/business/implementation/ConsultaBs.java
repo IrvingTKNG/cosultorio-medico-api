@@ -17,7 +17,6 @@ import java.util.List;
 public class ConsultaBs implements ConsultaService {
     private final ConsultaRepository consultaRepository;
 
-
     @Override
     public List<Consulta> listAll() {
         return consultaRepository.findAll();
