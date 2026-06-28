@@ -7,13 +7,13 @@ import com.example.consultorio_medico_api.utils.error.ErrorBs;
 import com.example.consultorio_medico_api.utils.error.ErrorEnum;
 import io.vavr.control.Either;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DoctorBs implements DoctorService {
     private final DoctorRepository doctorRepository;
 
@@ -23,7 +23,7 @@ public class DoctorBs implements DoctorService {
     }
 
     @Override
-    public Either<ErrorBs, Doctor> findById(Integer id) {
+    public Either<ErrorBs, Doctor> getById(Integer id) {
         var optionalDoctor = doctorRepository.findById(id);
         return optionalDoctor.<Either<ErrorBs, Doctor>>map(Either::right).orElseGet(() -> Either.left(ErrorEnum.NOT_FOUND));
     }

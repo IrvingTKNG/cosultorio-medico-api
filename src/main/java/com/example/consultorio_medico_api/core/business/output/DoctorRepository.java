@@ -1,12 +1,10 @@
 package com.example.consultorio_medico_api.core.business.output;
 
 import com.example.consultorio_medico_api.core.entity.Doctor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface DoctorRepository {
     /***
      * Verifica si existe un doctor por su id

@@ -43,11 +43,12 @@ public class CitaController {
     @PostMapping("/")
     @ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "createCita", summary = "Crea una cita. CU-CT-03", description = "Crea una cita")
-    public ResponseEntity<Boolean> createCita(@Valid  @RequestBody CitaDto citaDto) {
+    public ResponseEntity<Boolean> createCita(@Valid @RequestBody CitaDto citaDto) {
         var respuesta = citaService.create(citaDto.toEntity());
         return respuesta.fold(ErrorMapper::mapToResponseEntity,
                 success -> ResponseEntity.status(HttpStatus.CREATED).body(success));
     }
+
     @PutMapping("/{idCita}")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "updateCita", summary = "Actualiza una cita. CU-CT-04", description = "Actualiza una cita")
@@ -55,6 +56,7 @@ public class CitaController {
         var respuesta = citaService.update(idCita, citaDto.toEntity());
         return respuesta.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
     }
+
     @DeleteMapping("/{idCita}")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
     @Operation(operationId = "deleteCita", summary = "Elimina una cita. CU-CT-05", description = "Elimina una cita")

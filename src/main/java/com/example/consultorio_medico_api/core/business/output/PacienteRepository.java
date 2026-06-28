@@ -1,12 +1,10 @@
 package com.example.consultorio_medico_api.core.business.output;
 
 import com.example.consultorio_medico_api.core.entity.Paciente;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
 public interface PacienteRepository {
     /***
      * Verifica si existe un paciente por su id
@@ -14,6 +12,7 @@ public interface PacienteRepository {
      * @return
      */
     Boolean existsById(Integer id);
+
     /***
      * Busca un paciente por su id
      * @param id
@@ -23,6 +22,7 @@ public interface PacienteRepository {
 
     /**
      * Trae todos los pacientes
+     *
      * @return
      */
     List<Paciente> findAll();

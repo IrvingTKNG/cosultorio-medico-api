@@ -18,7 +18,7 @@ public interface DoctorService {
      * @param id
      * @return
      */
-    Either<ErrorBs, Doctor> findById(Integer id);
+    Either<ErrorBs, Doctor> getById(Integer id);
 
     /***
      * Guarda un doctor

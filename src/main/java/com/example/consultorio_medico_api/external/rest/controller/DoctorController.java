@@ -36,7 +36,7 @@ public class DoctorController {
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = DoctorDto.class)))
     @Operation(operationId = "getDoctor", summary = "Obtiene un doctor por su id.CU-DOC-02", description = "Obtiene un doctor por su id")
     public ResponseEntity<DoctorDto> getDoctor(@PathVariable Integer idDoctor) {
-        var respuesta = doctorService.findById(idDoctor).map(DoctorDto::fromEntity);
+        var respuesta = doctorService.getById(idDoctor).map(DoctorDto::fromEntity);
         return respuesta.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
     }
 
