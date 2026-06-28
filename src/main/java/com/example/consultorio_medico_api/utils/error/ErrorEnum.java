@@ -1,6 +1,7 @@
 package com.example.consultorio_medico_api.utils.error;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @AllArgsConstructor
@@ -10,6 +11,7 @@ public enum ErrorEnum implements ErrorBs {
 
     private final String codigo;
     private final String mensaje;
+    @Getter
     private final HttpStatus httpStatus; //Define el estatus
 
     @Override
@@ -22,7 +24,4 @@ public enum ErrorEnum implements ErrorBs {
         return mensaje;
     }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 }
