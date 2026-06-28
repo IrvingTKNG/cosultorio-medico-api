@@ -1,4 +1,4 @@
-package com.example.consultorio_medico_api.external.jpa.jpaEntity;
+package com.example.consultorio_medico_api.external.jpa.entity;
 
 import com.example.consultorio_medico_api.core.entity.Doctor;
 import jakarta.persistence.*;
@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
 import java.time.LocalTime;
 
 @Entity

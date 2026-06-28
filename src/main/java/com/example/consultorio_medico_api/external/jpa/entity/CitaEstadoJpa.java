@@ -1,4 +1,4 @@
-package com.example.consultorio_medico_api.external.jpa.jpaEntity;
+package com.example.consultorio_medico_api.external.jpa.entity;
 
 import com.example.consultorio_medico_api.core.entity.CitaEstado;
 import jakarta.persistence.*;

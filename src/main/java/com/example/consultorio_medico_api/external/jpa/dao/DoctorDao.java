@@ -2,7 +2,7 @@ package com.example.consultorio_medico_api.external.jpa.dao;
 
 import com.example.consultorio_medico_api.core.business.output.DoctorRepository;
 import com.example.consultorio_medico_api.core.entity.Doctor;
-import com.example.consultorio_medico_api.external.jpa.jpaEntity.DoctorJpa;
+import com.example.consultorio_medico_api.external.jpa.entity.DoctorJpa;
 import com.example.consultorio_medico_api.external.jpa.repository.DoctorJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

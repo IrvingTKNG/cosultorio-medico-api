@@ -1,6 +1,6 @@
 package com.example.consultorio_medico_api.external.jpa.repository;
 
-import com.example.consultorio_medico_api.external.jpa.jpaEntity.DoctorJpa;
+import com.example.consultorio_medico_api.external.jpa.entity.DoctorJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
