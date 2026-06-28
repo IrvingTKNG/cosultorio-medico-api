@@ -1,0 +1,42 @@
+{
+  "id": "Cita-SM",
+  "name": "Cita",
+  "actions": [
+    {"id": 1, "name": "Reagendar"},
+    {"id": 2, "name": "Cancelar"},
+    {"id": 3, "name": "Confirmar"},
+    {"id": 4, "name": "Finalizar"}
+  ],
+  "states": [
+    {
+      "id":  1,
+    "name": "Creada",
+      "actions": [1, 2, 3],
+      "transitions": [2,3,4]
+    },
+    {
+      "id":  2,
+      "name": "Reagendada",
+      "actions": [1, 2],
+      "transitions": [3,4]
+    },
+    {
+      "id":  3,
+      "name": "Cancelada",
+      "actions": [1, 2],
+      "transitions": []
+    },
+    {
+      "id":  4,
+      "name": "Confirmada",
+      "actions": [1, 2],
+      "transitions": [5]
+    },
+    {
+      "id":  5,
+      "name": "Finalizada",
+      "actions": [1, 2],
+      "transitions": []
+    }
+  ]
+}
