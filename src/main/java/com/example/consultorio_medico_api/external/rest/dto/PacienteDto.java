@@ -1,7 +1,6 @@
 package com.example.consultorio_medico_api.external.rest.dto;
 
 import com.example.consultorio_medico_api.core.entity.Paciente;
-import com.example.consultorio_medico_api.utils.StringsConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +11,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
+
+import static com.example.consultorio_medico_api.utils.DateUtils.LOCAL_DATE_FORMAT;
 
 @Builder
 @Getter
@@ -47,12 +48,12 @@ public class PacienteDto {
     @Schema(description = "Numero de expediente del paciente")
     private String numExpediente;
     @JsonProperty
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_FORMAT)
     @Schema(description = "Fecha de nacimiento del paciente", format = "string", implementation = String.class, example = "01/01/2010",requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
     private LocalDate fechaNacimiento;
     @JsonProperty
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_FORMAT)
     @Schema(description = "Fecha de registro del paciente", format = "string", implementation = String.class, accessMode = Schema.AccessMode.READ_ONLY)
     private LocalDate fechaRegistro;
 

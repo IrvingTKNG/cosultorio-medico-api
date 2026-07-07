@@ -2,7 +2,6 @@ package com.example.consultorio_medico_api.external.rest.dto;
 
 import com.example.consultorio_medico_api.core.entity.Cita;
 import com.example.consultorio_medico_api.utils.DateUtils;
-import com.example.consultorio_medico_api.utils.StringsConstants;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,6 +13,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+
+import static com.example.consultorio_medico_api.utils.DateUtils.LOCAL_DATE_FORMAT;
 
 @Builder
 @Getter
@@ -39,7 +40,7 @@ public class CitaDto {
     @Schema(description = "Estado de la cita",accessMode = Schema.AccessMode.READ_ONLY)
     private String estado;
     @JsonProperty
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = StringsConstants.LOCAL_DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = LOCAL_DATE_FORMAT)
     @Schema(description = "Fecha asignada para la cita del paciente", format = "string", implementation = String.class, example = "01/01/2010", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull
     private LocalDate fechaCita;
