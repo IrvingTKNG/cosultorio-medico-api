@@ -61,7 +61,7 @@ public class RecetaController {
 
     @PutMapping("/{idReceta}")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
-    @Operation(operationId = "idReceta", summary = "Actualiza una receta.CU-DOC-05", description = "Actualiza una receta")
+    @Operation(operationId = "idReceta", summary = "Actualiza una receta.CU-REC-05", description = "Actualiza una receta")
     public ResponseEntity<Boolean> idReceta(@PathVariable Integer idReceta, @Valid @RequestBody RecetaDto recetaDto) {
         var respuesta = recetaService.update(idReceta, recetaDto.toEntity());
         return respuesta.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);

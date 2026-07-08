@@ -17,7 +17,8 @@ import java.time.LocalDate;
 @Table(name = "consulta")
 public class ConsultaJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "consulta_id_seq", sequenceName = "consulta_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "consulta_id_seq", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_consulta")
     private Integer id;
     @Column(name = "fk_id_doctor")

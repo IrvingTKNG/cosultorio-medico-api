@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_AGENDADA;
-import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_REAGENDADA;
+import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_EDITADA;
 
 @Service
 @RequiredArgsConstructor
@@ -77,7 +77,7 @@ public class CitaBs implements CitaService {
         getCita.setHoraInicio(cita.getHoraInicio());
         getCita.setIdDoctor(cita.getIdDoctor());
         getCita.setHoraFin(cita.getHoraFin());
-        getCita.setIdEstado(ST_REAGENDADA);
+        getCita.setIdEstado(ST_EDITADA);
         citaRepository.save(getCita);
         return Either.right(Boolean.TRUE);
     }

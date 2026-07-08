@@ -15,7 +15,8 @@ import java.time.LocalTime;
 @Table(name = "doctor")
 public class DoctorJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "doctor_id_seq", sequenceName = "doctor_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "doctor_id_seq", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_doctor")
     private Integer id;
     @Column(name = "tx_nombre")
