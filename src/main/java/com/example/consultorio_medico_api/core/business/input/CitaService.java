@@ -1,18 +1,14 @@
 package com.example.consultorio_medico_api.core.business.input;
 
 import com.example.consultorio_medico_api.core.entity.Cita;
+import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import com.example.consultorio_medico_api.utils.error.ErrorBs;
 import io.vavr.control.Either;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CitaService {
-    /***
-     * Lista todas las citas
-     * @return
-     */
-    List<Cita> listAll();
-
     /***
      * Trae una cita por su id
      * @param id
@@ -20,6 +16,13 @@ public interface CitaService {
      */
     Either<ErrorBs,Cita> getById(Integer id);
 
+    /***
+     * Lista todas las citas
+     * @return
+     */
+    List<Cita> listAll();
+
+    List<Cita> listByFecha(LocalDate fhInicio, LocalDate fhFin, Paginador paginador);
     /***
      * Guarda una cita
      * @param cita

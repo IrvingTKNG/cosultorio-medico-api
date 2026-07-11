@@ -4,6 +4,7 @@ import com.example.consultorio_medico_api.core.business.input.CitaService;
 import com.example.consultorio_medico_api.core.business.output.CitaRepository;
 import com.example.consultorio_medico_api.core.business.statenmachine.CitaSM;
 import com.example.consultorio_medico_api.core.entity.Cita;
+import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import com.example.consultorio_medico_api.utils.error.ErrorBs;
 import com.example.consultorio_medico_api.utils.error.ErrorEnum;
 import io.vavr.control.Either;
@@ -11,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_AGENDADA;
@@ -27,12 +29,6 @@ public class CitaBs implements CitaService {
     // Agregar filtro por doctor
     // Agregar Reglas de negocio
     // Paginacion y ordenamiento
-    // Agrear maquina de estados de cita
-
-    @Override
-    public List<Cita> listAll() {
-        return citaRepository.findAll();
-    }
 
     @Override
     public Either<ErrorBs, Cita> getById(Integer id) {
@@ -43,6 +39,17 @@ public class CitaBs implements CitaService {
         var cita = findCita.get();
         return Either.right(cita);
     }
+
+    @Override
+    public List<Cita> listAll() {
+        return citaRepository.findAll();
+    }
+
+    @Override
+    public List<Cita> listByFecha(LocalDate fhInicio, LocalDate fhFin, Paginador paginador) {
+        return citaRepository.findByFecha(fhInicio, fhFin, paginador);
+    }
+
 
     @Override
     @Transactional

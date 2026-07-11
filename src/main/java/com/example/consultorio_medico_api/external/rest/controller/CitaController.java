@@ -2,7 +2,9 @@ package com.example.consultorio_medico_api.external.rest.controller;
 
 import com.example.consultorio_medico_api.core.business.input.CitaService;
 import com.example.consultorio_medico_api.external.rest.dto.CitaDto;
+import com.example.consultorio_medico_api.external.rest.dto.FiltroFindByFechasDto;
 import com.example.consultorio_medico_api.utils.error.ErrorMapper;
+import com.example.consultorio_medico_api.utils.paginador.PaginadorDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -38,6 +40,16 @@ public class CitaController {
     public ResponseEntity<CitaDto> getCita(@PathVariable Integer idCita) {
         var respuesta = citaService.getById(idCita).map(CitaDto::fromEntity);
         return respuesta.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);
+    }
+
+    @GetMapping("/by-fecha")
+    @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CitaDto.class))))
+    @Operation(operationId = "listCitasByFecha", summary = "Obtiene todas las citas segun un rango de fechas.CU-CT-01", description = "Obtiene todas las citas segun un rango de fechas.")
+    public ResponseEntity<List<CitaDto>> listCitasByFecha(
+            @Valid @ModelAttribute FiltroFindByFechasDto filtro,
+            @Valid @ModelAttribute PaginadorDto paginador) {
+        var respuesta = citaService.listByFecha(filtro.getFhInicio(), filtro.getFhFin(), paginador.toEntity()).stream().map(CitaDto::fromEntity).toList();
+        return ResponseEntity.ok(respuesta);
     }
 
     @PostMapping("/")
