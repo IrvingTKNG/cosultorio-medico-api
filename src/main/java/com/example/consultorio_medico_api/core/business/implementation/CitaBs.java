@@ -90,6 +90,11 @@ public class CitaBs implements CitaService {
         if (findCita.isEmpty()) {
             return Either.left(ErrorEnum.NOT_FOUND);
         }
+        var existsCitaProgramada = citaRepository.existsByIdDoctorAndFecha(cita.getIdDoctor(),
+                cita.getFecha(), cita.getHoraInicio(), cita.getHoraFin());
+        if (existsCitaProgramada.equals(Boolean.TRUE)) {
+            return Either.left(ErrorEnum.CITA_DUPLICATED);
+        }
         var getCita = findCita.get();
         getCita.setFecha(cita.getFecha());
         getCita.setHoraInicio(cita.getHoraInicio());
