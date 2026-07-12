@@ -2,7 +2,6 @@ package com.example.consultorio_medico_api.core.business.output;
 
 import com.example.consultorio_medico_api.core.entity.Cita;
 import com.example.consultorio_medico_api.utils.paginador.Paginador;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
