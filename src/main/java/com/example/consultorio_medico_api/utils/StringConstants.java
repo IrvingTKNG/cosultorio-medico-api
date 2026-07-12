@@ -16,4 +16,5 @@ public final class StringConstants {
     public static final String FECHA = "fecha";
     public static final String HORA_INICIO = "horaInicio";
     public static final String HORA_FIN = "horaFin";
+    public static final String NOMBRE_DOCTOR = "nombreDoctor";
 }

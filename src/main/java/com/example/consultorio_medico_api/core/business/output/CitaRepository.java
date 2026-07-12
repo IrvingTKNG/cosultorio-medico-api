@@ -4,10 +4,14 @@ import com.example.consultorio_medico_api.core.entity.Cita;
 import com.example.consultorio_medico_api.utils.paginador.Paginador;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 public interface CitaRepository {
+
+    Boolean existsByIdDoctorAndFecha(Integer idDoctor, LocalDate fecha, LocalTime tmInicio, LocalTime tmFin);
+
     /***
      * Trae una cita por su id
      * @param id

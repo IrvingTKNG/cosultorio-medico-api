@@ -4,9 +4,9 @@ import com.example.consultorio_medico_api.core.business.input.CitaService;
 import com.example.consultorio_medico_api.core.business.output.CitaRepository;
 import com.example.consultorio_medico_api.core.business.statenmachine.CitaSM;
 import com.example.consultorio_medico_api.core.entity.Cita;
-import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import com.example.consultorio_medico_api.utils.error.ErrorBs;
 import com.example.consultorio_medico_api.utils.error.ErrorEnum;
+import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import io.vavr.control.Either;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_AGENDADA;
 import static com.example.consultorio_medico_api.core.business.statenmachine.CitaSM.ST_EDITADA;
+import static com.example.consultorio_medico_api.utils.DateUtils.DEFAULT_ZONE_ID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +26,7 @@ public class CitaBs implements CitaService {
     private final CitaSM citaSM;
 
     //TODO:
-    // Agregar filtro por fecha
     // Agregar filtro por doctor
-    // Agregar Reglas de negocio
-    // Paginacion y ordenamiento
 
     @Override
     public Either<ErrorBs, Cita> getById(Integer id) {
@@ -54,7 +52,14 @@ public class CitaBs implements CitaService {
     @Override
     @Transactional
     public Either<ErrorBs, Boolean> create(Cita cita) {
-        //TODO: no puede haber dos citas con la misma fecha y hora para el mismo paciente y doctor
+        if (cita.getFecha().isBefore(LocalDate.now(DEFAULT_ZONE_ID))) {
+            return Either.left(ErrorEnum.INVALID_DATE);
+        }
+        var existsCitaProgramada = citaRepository.existsByIdDoctorAndFecha(cita.getIdDoctor(),
+                cita.getFecha(), cita.getHoraInicio(), cita.getHoraFin());
+        if (existsCitaProgramada.equals(Boolean.TRUE)) {
+            return Either.left(ErrorEnum.CITA_DUPLICATED);
+        }
         //Mejora: Agregar indicaciones para la cita
         cita.setIdEstado(ST_AGENDADA);
         citaRepository.save(cita);

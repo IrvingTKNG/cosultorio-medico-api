@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum ErrorEnum implements ErrorBs {
     USER_DUPLICATED("RN-001", "El usuario ya existe", HttpStatus.CONFLICT),       // 409
-    NOT_FOUND("RN-002", "El objeto no existe", HttpStatus.NOT_FOUND);// 404
+    NOT_FOUND("RN-002", "El objeto no existe", HttpStatus.NOT_FOUND),// 404
+    INVALID_DATE("RN-003", "Fecha invalida", HttpStatus.NOT_ACCEPTABLE),
+    CITA_DUPLICATED("RN-004", "La cita ya existe", HttpStatus.CONFLICT),;
 
     private final String codigo;
     private final String mensaje;

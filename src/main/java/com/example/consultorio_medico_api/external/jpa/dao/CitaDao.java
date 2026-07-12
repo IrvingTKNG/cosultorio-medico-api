@@ -4,7 +4,6 @@ import com.example.consultorio_medico_api.core.business.output.CitaRepository;
 import com.example.consultorio_medico_api.core.entity.Cita;
 import com.example.consultorio_medico_api.external.jpa.entity.CitaJpa;
 import com.example.consultorio_medico_api.external.jpa.repository.CitaJpaRepository;
-import com.example.consultorio_medico_api.utils.DateUtils;
 import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -34,7 +33,9 @@ public class CitaDao implements CitaRepository {
             select
               c.id_cita as idCita,
               c.fk_id_paciente as idPaciente,
+              concat(p.tx_nombre , ' ', p.tx_apellido_paterno,' ', p.tx_apellido_materno ) as nombrePaciente,
               c.fk_id_doctor as idDoctor,
+              concat(d.tx_nombre , ' ', d.tx_apellido_paterno,' ', d.tx_apellido_materno ) as nombreDoctor,
               c.fk_id_estado as idEstado,
               ce.tx_nombre as estado,
               c.fh_cita as fecha,
@@ -78,7 +79,9 @@ public class CitaDao implements CitaRepository {
         return stream.map(row -> Cita.builder()
                 .id(((Number) row.get(ID_CITA)).intValue())
                 .idPaciente(((Number) row.get(ID_PACIENTE)).intValue())
+                .nombrePaciente(row.get(NOMBRE_PACIENTE, String.class))
                 .idDoctor(((Number) row.get(ID_DOCTOR)).intValue())
+                .nombreDoctor(row.get(NOMBRE_DOCTOR, String.class))
                 .idEstado(((Number) row.get(ID_ESTADO)).intValue())
                 .estado(row.get(ESTADO, String.class))
                 .fecha(row.get(FECHA, LocalDate.class))
@@ -86,6 +89,11 @@ public class CitaDao implements CitaRepository {
                 .horaFin(row.get(HORA_FIN, LocalTime.class))
                 .build()
         ).toList();
+    }
+
+    @Override
+    public Boolean existsByIdDoctorAndFecha(Integer idDoctor, LocalDate fecha, LocalTime tmInicio, LocalTime tmFin) {
+        return citaJpaRepository.existeCita(idDoctor.longValue(), fecha, tmInicio, tmFin);
     }
 
     @Override
