@@ -10,6 +10,7 @@ import com.example.consultorio_medico_api.utils.paginador.Paginador;
 import io.vavr.control.Either;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -46,6 +47,11 @@ public class CitaBs implements CitaService {
     @Override
     public List<Cita> listByFecha(LocalDate fhInicio, LocalDate fhFin, Paginador paginador) {
         return citaRepository.findByFecha(fhInicio, fhFin, paginador);
+    }
+
+    @Override
+    public List<Cita> listByIdDoctor(Integer idDoctor, Pageable pageable) {
+        return citaRepository.findByIdDoctor(idDoctor, pageable);
     }
 
 

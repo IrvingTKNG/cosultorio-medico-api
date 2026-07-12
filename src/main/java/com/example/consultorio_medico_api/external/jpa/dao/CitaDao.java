@@ -11,6 +11,7 @@ import jakarta.persistence.Tuple;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.query.TypedParameterValue;
 import org.hibernate.type.StandardBasicTypes;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -89,6 +90,17 @@ public class CitaDao implements CitaRepository {
                 .horaFin(row.get(HORA_FIN, LocalTime.class))
                 .build()
         ).toList();
+    }
+
+    @Override
+    public List<Cita> findByIdDoctor(Integer idDoctor, Pageable pageable) {
+        return citaJpaRepository.findByIdDoctor(idDoctor, pageable).stream().map(citaJpa -> {
+            final var cita = citaJpa.toEntity();
+            cita.setEstado(citaJpa.getCitaestadojpa().getNombre());
+            cita.setNombreDoctor(citaJpa.getDoctorjpa().getNombre() + " " + citaJpa.getDoctorjpa().getApellidoPaterno() + " " + citaJpa.getDoctorjpa().getApellidoMaterno());
+            cita.setNombrePaciente(citaJpa.getPacientejpa().getNombre() + " " + citaJpa.getPacientejpa().getApellidoPaterno() + " " + citaJpa.getPacientejpa().getApellidoMaterno());
+            return cita;
+        }).toList();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.example.consultorio_medico_api.core.entity.Doctor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
@@ -11,6 +12,7 @@ import java.time.LocalTime;
 @Entity
 @Builder
 @AllArgsConstructor
+@Getter
 @NoArgsConstructor
 @Table(name = "doctor")
 public class DoctorJpa {

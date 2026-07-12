@@ -13,6 +13,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +48,20 @@ public class CitaController {
 
     @GetMapping("/by-fecha")
     @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CitaDto.class))))
-    @Operation(operationId = "listCitasByFecha", summary = "Obtiene todas las citas segun un rango de fechas.CU-CT-01", description = "Obtiene todas las citas segun un rango de fechas.")
+    @Operation(operationId = "listCitasByFecha", summary = "Obtiene todas las citas segun un rango de fechas.CU-CT-06", description = "Obtiene todas las citas segun un rango de fechas.")
     public ResponseEntity<List<CitaDto>> listCitasByFecha(
             @Valid @ModelAttribute FiltroFindByFechasDto filtro,
             @Valid @ModelAttribute PaginadorDto paginador) {
         var respuesta = citaService.listByFecha(filtro.getFhInicio(), filtro.getFhFin(), paginador.toEntity()).stream().map(CitaDto::fromEntity).toList();
+        return ResponseEntity.ok(respuesta);
+    }
+
+    @GetMapping("listByDoctor/{idDoctor}")
+    @ApiResponse(responseCode = "200", content = @Content(array = @ArraySchema(schema = @Schema(implementation = CitaDto.class))))
+    @Operation(operationId = "listCitaByIdDoctor", summary = "Obtiene todas las citas de un doctor.CU-CT-07", description = "Obtiene todas las citas de un doctor.")
+    public ResponseEntity<List<CitaDto>> listCitaByIdDoctor(@PathVariable Integer idDoctor,
+                                                           @ParameterObject @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+        var respuesta = citaService.listByIdDoctor(idDoctor, pageable).stream().map(CitaDto::fromEntity).toList();
         return ResponseEntity.ok(respuesta);
     }
 
