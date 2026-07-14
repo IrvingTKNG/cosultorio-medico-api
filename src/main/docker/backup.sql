@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict IUXXRTyqbjiqGcMcJXGefXAvkxZuxR24ZGTiY7uSfo36XQy7H0MteFJoR3HiOUQ
+\restrict tgeoCPtlQgFH9I34z1mHFr2drquzFAzJdPicTEkCJOjBvOsCqwyyXglJV9WFuar
 
 -- Dumped from database version 16.13
 -- Dumped by pg_dump version 16.13
@@ -41,10 +41,10 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.cita (
-    id_cita bigint DEFAULT nextval('public.cita_id_seq'::regclass) NOT NULL,
-    fk_id_paciente bigint NOT NULL,
-    fk_id_doctor bigint,
-    fk_id_estado bigint NOT NULL,
+    id_cita integer DEFAULT nextval('public.cita_id_seq'::regclass) NOT NULL,
+    fk_id_paciente integer NOT NULL,
+    fk_id_doctor integer,
+    fk_id_estado integer NOT NULL,
     fh_cita date,
     tm_inicio time without time zone,
     tm_fin time without time zone
@@ -72,7 +72,7 @@ ALTER SEQUENCE public.estado_id_seq OWNER TO postgres;
 --
 
 CREATE TABLE public.cita_estado (
-    id_estado bigint DEFAULT nextval('public.estado_id_seq'::regclass) NOT NULL,
+    id_estado integer DEFAULT nextval('public.estado_id_seq'::regclass) NOT NULL,
     tx_nombre character varying
 );
 
@@ -98,9 +98,9 @@ ALTER SEQUENCE public.consulta_id_seq OWNER TO postgres;
 --
 
 CREATE TABLE public.consulta (
-    id_consulta bigint DEFAULT nextval('public.consulta_id_seq'::regclass) NOT NULL,
-    fk_id_doctor bigint,
-    fk_id_cita bigint NOT NULL,
+    id_consulta integer DEFAULT nextval('public.consulta_id_seq'::regclass) NOT NULL,
+    fk_id_doctor integer,
+    fk_id_cita integer NOT NULL,
     fh_consulta date,
     tx_motivo character varying,
     tx_observaciones character varying,
@@ -129,7 +129,8 @@ ALTER SEQUENCE public.doctor_id_seq OWNER TO postgres;
 --
 
 CREATE TABLE public.doctor (
-    id_doctor bigint DEFAULT nextval('public.doctor_id_seq'::regclass) NOT NULL,
+    id_doctor integer DEFAULT nextval('public.doctor_id_seq'::regclass) NOT NULL,
+    tx_nombre character varying NOT NULL,
     tx_apellido_paterno character varying NOT NULL,
     tx_apellido_materno character varying,
     tx_correo character varying NOT NULL,
@@ -138,8 +139,7 @@ CREATE TABLE public.doctor (
     tx_num_tel_alter character varying,
     tx_especialidad character varying,
     tm_entrada time without time zone,
-    tm_salida time without time zone,
-    tx_nombre character varying NOT NULL
+    tm_salida time without time zone
 );
 
 
@@ -164,7 +164,7 @@ ALTER SEQUENCE public.paciente_id_seq OWNER TO postgres;
 --
 
 CREATE TABLE public.paciente (
-    id_paciente bigint DEFAULT nextval('public.paciente_id_seq'::regclass) NOT NULL,
+    id_paciente integer DEFAULT nextval('public.paciente_id_seq'::regclass) NOT NULL,
     tx_nombre character varying NOT NULL,
     tx_apellido_paterno character varying NOT NULL,
     tx_apellido_materno character varying,
@@ -198,8 +198,8 @@ ALTER SEQUENCE public.receta_id_seq OWNER TO postgres;
 --
 
 CREATE TABLE public.receta (
-    id_receta bigint DEFAULT nextval('public.receta_id_seq'::regclass) NOT NULL,
-    fk_id_consulta bigint NOT NULL,
+    id_receta integer DEFAULT nextval('public.receta_id_seq'::regclass) NOT NULL,
+    fk_id_consulta integer NOT NULL,
     fh_receta date,
     tx_indicaciones character varying,
     json_detalles jsonb
@@ -241,7 +241,7 @@ COPY public.consulta (id_consulta, fk_id_doctor, fk_id_cita, fh_consulta, tx_mot
 -- Data for Name: doctor; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.doctor (id_doctor, tx_apellido_paterno, tx_apellido_materno, tx_correo, tx_cedula, tx_num_telefono, tx_num_tel_alter, tx_especialidad, tm_entrada, tm_salida, tx_nombre) FROM stdin;
+COPY public.doctor (id_doctor, tx_nombre, tx_apellido_paterno, tx_apellido_materno, tx_correo, tx_cedula, tx_num_telefono, tx_num_tel_alter, tx_especialidad, tm_entrada, tm_salida) FROM stdin;
 \.
 
 
@@ -403,5 +403,5 @@ ALTER TABLE ONLY public.receta
 -- PostgreSQL database dump complete
 --
 
-\unrestrict IUXXRTyqbjiqGcMcJXGefXAvkxZuxR24ZGTiY7uSfo36XQy7H0MteFJoR3HiOUQ
+\unrestrict tgeoCPtlQgFH9I34z1mHFr2drquzFAzJdPicTEkCJOjBvOsCqwyyXglJV9WFuar
 
