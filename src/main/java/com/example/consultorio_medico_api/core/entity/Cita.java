@@ -13,7 +13,9 @@ import java.time.LocalTime;
 public class Cita {
     private Integer id;
     private Integer idDoctor;
+    private String nombreDoctor;
     private Integer idPaciente;
+    private String nombrePaciente;
     private Integer idEstado;
     private String estado;
     private LocalDate fecha;

@@ -21,7 +21,8 @@ import java.util.List;
 @Table(name = "receta")
 public class RecetaJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "receta_id_seq", sequenceName = "receta_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "receta_id_seq", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_receta")
     private Integer id;
     @Column(name = "fk_id_consulta")

@@ -18,7 +18,8 @@ import java.time.LocalTime;
 @Table(name = "cita")
 public class CitaJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "cita_id_seq", sequenceName = "cita_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "cita_id_seq", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_cita")
     private Integer id;
     @Column(name = "fk_id_doctor")
@@ -35,15 +36,15 @@ public class CitaJpa {
     private LocalTime horaFin;
     //JOINS
 
-    @JoinColumn(name = "fk_id_doctor", referencedColumnName = "id_doctor", insertable = false,updatable = false )
+    @JoinColumn(name = "fk_id_doctor", referencedColumnName = "id_doctor", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private DoctorJpa doctorjpa;
 
-    @JoinColumn(name = "fk_id_paciente", referencedColumnName = "id_paciente", insertable = false,updatable = false )
+    @JoinColumn(name = "fk_id_paciente", referencedColumnName = "id_paciente", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private PacienteJpa pacientejpa;
 
-    @JoinColumn(name = "fk_id_estado", referencedColumnName = "id_estado", insertable = false,updatable = false )
+    @JoinColumn(name = "fk_id_estado", referencedColumnName = "id_estado", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private CitaEstadoJpa citaestadojpa;
 
@@ -59,7 +60,7 @@ public class CitaJpa {
                 .build();
     }
 
-    public Cita toEntity(){
+    public Cita toEntity() {
         return Cita.builder()
                 .id(id)
                 .idDoctor(idDoctor)

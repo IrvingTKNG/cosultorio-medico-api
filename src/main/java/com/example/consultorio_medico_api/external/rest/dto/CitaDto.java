@@ -29,6 +29,12 @@ public class CitaDto {
     @JsonProperty
     @Schema(description = "Identificador del paciente", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer idPaciente;
+    @JsonProperty
+    @Schema(description = "Nombre del paciente",accessMode = Schema.AccessMode.READ_ONLY)
+    private String nombrePaciente;
+    @JsonProperty
+    @Schema(description = "Nombre del doctor",accessMode = Schema.AccessMode.READ_ONLY)
+    private String nombreDoctor;
     @NotNull
     @JsonProperty
     @Schema(description = "Identificador del doctor", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -59,7 +65,9 @@ public class CitaDto {
         return CitaDto.builder()
                 .id(entity.getId())
                 .idPaciente(entity.getIdPaciente())
+                .nombrePaciente(entity.getNombrePaciente())
                 .idDoctor(entity.getIdDoctor())
+                .nombreDoctor(entity.getNombreDoctor())
                 .idEstado(entity.getIdEstado())
                 .estado(entity.getEstado())
                 .fechaCita(entity.getFecha())

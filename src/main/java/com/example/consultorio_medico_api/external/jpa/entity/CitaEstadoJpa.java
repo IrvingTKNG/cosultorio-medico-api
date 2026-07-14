@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "cita_estado")
 public class CitaEstadoJpa {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "estado_id_seq", sequenceName = "estado_id_seq", allocationSize = 1)
+    @GeneratedValue(generator = "estado_id_seq", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_estado")
     private Integer id;
     @Column(name = "tx_nombre")

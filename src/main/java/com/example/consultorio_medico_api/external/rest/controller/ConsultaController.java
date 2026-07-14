@@ -61,7 +61,7 @@ public class ConsultaController {
 
     @PutMapping("/{idConsulta}")
     @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = Boolean.class)))
-    @Operation(operationId = "updateConsulta", summary = "Actualiza una consulta.CU-DOC-05", description = "Actualiza una consulta")
+    @Operation(operationId = "updateConsulta", summary = "Actualiza una consulta.CU-CON-05", description = "Actualiza una consulta")
     public ResponseEntity<Boolean> updateConsulta(@PathVariable Integer idConsulta, @Valid @RequestBody ConsultaDto consultaDto) {
         var respuesta = consultaService.update(idConsulta, consultaDto.toEntity());
         return respuesta.fold(ErrorMapper::mapToResponseEntity, ResponseEntity::ok);

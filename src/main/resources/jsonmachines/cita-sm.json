@@ -2,7 +2,7 @@
   "id": "Cita-SM",
   "name": "Cita",
   "actions": [
-    {"id": 1, "name": "Reagendar"},
+    {"id": 1, "name": "Editar"},
     {"id": 2, "name": "Cancelar"},
     {"id": 3, "name": "Confirmar"},
     {"id": 4, "name": "Finalizar"}
@@ -16,7 +16,7 @@
     },
     {
       "id":  2,
-      "name": "Reagendada",
+      "name": "Editada",
       "actions": [1, 2],
       "transitions": [3,4]
     },
