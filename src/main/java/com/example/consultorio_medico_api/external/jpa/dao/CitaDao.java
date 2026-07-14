@@ -42,9 +42,13 @@ public class CitaDao implements CitaRepository {
               c.fh_cita as fecha,
               c.tm_inicio as horaInicio,
               c.tm_fin as horaFin
-            from cita c
-            join cita_estado ce
-              on c.fk_id_estado = ce.id_estado
+              from cita c
+              join cita_estado ce
+                on c.fk_id_estado = ce.id_estado
+              join paciente p
+                on p.id_paciente = c.fk_id_paciente
+              join doctor d
+                on d.id_doctor = c.fk_id_doctor
             where c.fh_cita between :fhInicio and :fhFin
             order by c.fh_cita asc
             """;
@@ -78,12 +82,12 @@ public class CitaDao implements CitaRepository {
                 .setParameter(NUM_CANTIDAD_FILAS, new TypedParameterValue<>(StandardBasicTypes.INTEGER, null))
                 .getResultStream();
         return stream.map(row -> Cita.builder()
-                .id(((Number) row.get(ID_CITA)).intValue())
-                .idPaciente(((Number) row.get(ID_PACIENTE)).intValue())
+                .id(row.get(ID_CITA, Integer.class))
+                .idPaciente(row.get(ID_PACIENTE, Integer.class))
                 .nombrePaciente(row.get(NOMBRE_PACIENTE, String.class))
-                .idDoctor(((Number) row.get(ID_DOCTOR)).intValue())
+                .idDoctor(row.get(ID_DOCTOR, Integer.class))
                 .nombreDoctor(row.get(NOMBRE_DOCTOR, String.class))
-                .idEstado(((Number) row.get(ID_ESTADO)).intValue())
+                .idEstado(row.get(ID_ESTADO, Integer.class))
                 .estado(row.get(ESTADO, String.class))
                 .fecha(row.get(FECHA, LocalDate.class))
                 .horaInicio(row.get(HORA_INICIO, LocalTime.class))
@@ -105,7 +109,7 @@ public class CitaDao implements CitaRepository {
 
     @Override
     public Boolean existsByIdDoctorAndFecha(Integer idDoctor, LocalDate fecha, LocalTime tmInicio, LocalTime tmFin) {
-        return citaJpaRepository.existeCita(idDoctor.longValue(), fecha, tmInicio, tmFin);
+        return citaJpaRepository.existeCita(idDoctor, fecha, tmInicio, tmFin);
     }
 
     @Override

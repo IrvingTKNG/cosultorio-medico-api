@@ -1,0 +1,1 @@
+CREATE DATABASE consultorio_bd_test;
