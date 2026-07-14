@@ -21,7 +21,7 @@ public interface CitaJpaRepository extends JpaRepository<CitaJpa, Integer> {
                       AND c.tm_fin > :tmInicio
             )
             """, nativeQuery = true)
-    boolean existeCita(@Param("idDoctor") Long idDoctor,
+    boolean existeCita(@Param("idDoctor") Integer idDoctor,
                        @Param("fecha") LocalDate fecha,
                        @Param("tmInicio") LocalTime tmInicio,
                        @Param("tmFin") LocalTime tmFin);
